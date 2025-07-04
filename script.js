@@ -3,9 +3,8 @@ const chatInput = document.getElementById('chatInput');
 const sendButton = document.getElementById('sendButton');
 const chatWindow = document.getElementById('chatWindow');
 
-// **مهم: URL Webhook خود را اینجا قرار دهید.**
-// این همان لینکی است که از نود Webhook در n8n کپی کرده‌اید.
-// مثال: 'https://jalvanaghagent.app.n8n.cloud/webhook-test/5358801a-fe87-4fd6-a1bb-5a40c298b554'
+// **URL Webhook n8n شما**
+// این آدرسی است که شما ارائه دادید.
 const WEBHOOK_URL = 'https://jalvanaghagent.app.n8n.cloud/webhook-test/a6fe9bf9-3c16-4972-a55c-9484e817ed0b'; 
 
 // اگر در n8n برای Webhook خود احراز هویت (Basic Auth) فعال کرده‌اید، 
@@ -55,4 +54,42 @@ async function sendMessage() {
         const data = await response.json(); // پاسخ JSON از n8n را دریافت کن
 
         // 3. نمایش پاسخ AI در چت‌باکس
-        // انتظار داریم n8n پاسخ AI
+        // انتظار داریم n8n پاسخ AI را در یک کلید به نام 'response' در JSON برگرداند
+        if (data && data.response) {
+            appendMessage(data.response, 'ai-message');
+        } else {
+            // اگر پاسخ از n8n فرمت مورد انتظار را نداشت
+            appendMessage('مشاور پاسخ نامشخصی داد. لطفاً دوباره تلاش کنید.', 'ai-message');
+        }
+
+    } catch (error) {
+        console.error('خطا در ارسال پیام یا دریافت پاسخ:', error);
+        // نمایش پیام خطا به کاربر
+        appendMessage('متاسفانه در حال حاضر ارتباط برقرار نیست. لطفاً بعداً تلاش کنید یا با دفتر تماس بگیرید.', 'ai-message error');
+    } finally {
+        // اطمینان از اینکه اسکرول همیشه به پایین می‌رود
+        chatWindow.scrollTop = chatWindow.scrollHeight; 
+    }
+}
+
+/**
+ * این تابع یک پیام جدید را به پنجره چت اضافه می‌کند.
+ * @param {string} text - متن پیام.
+ * @param {string} type - نوع پیام ('user-message' برای کاربر، 'ai-message' برای ربات).
+ */
+function appendMessage(text, type) {
+    const messageDiv = document.createElement('div');
+    messageDiv.classList.add('message', type);
+    messageDiv.textContent = text;
+    chatWindow.appendChild(messageDiv);
+}
+
+// گوش دادن به رویداد کلیک روی دکمه ارسال
+sendButton.addEventListener('click', sendMessage);
+
+// گوش دادن به رویداد فشردن کلید (برای ارسال پیام با Enter)
+chatInput.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
+});
