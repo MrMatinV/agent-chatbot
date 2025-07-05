@@ -1,95 +1,30 @@
-// دسترسی به عناصر HTML از طریق ID
-const chatInput = document.getElementById('chatInput');
-const sendButton = document.getElementById('sendButton');
-const chatWindow = document.getElementById('chatWindow');
-
-// **URL Webhook n8n شما (به‌روز شده)**
-// این همان آدرس نهایی است که شما ارائه دادید.
-const WEBHOOK_URL = 'https://jalvanaghagent.app.n8n.cloud/webhook/074a5928-8902-43af-9a56-4cf0d0d12876'; 
-
-// اگر در n8n برای Webhook خود احراز هویت (Basic Auth) فعال کرده‌اید، 
-// خطوط زیر را از حالت کامنت خارج کرده و نام کاربری و رمز عبور را جایگزین کنید:
-// const USERNAME = 'your_username';
-// const PASSWORD = 'your_password';
-
-
-/**
- * این تابع پیام کاربر را دریافت کرده، آن را در چت‌باکس نمایش می‌دهد،
- * و سپس به Webhook در n8n ارسال می‌کند تا پاسخ AI را دریافت کند.
- */
 async function sendMessage() {
-    const messageText = chatInput.value.trim();
-    if (messageText === '') return; // اگر پیام خالی بود، کاری نکن
+  const input = document.getElementById("userInput");
+  const text = input.value.trim();
+  if (!text) return;
 
-    // 1. نمایش پیام کاربر در چت‌باکس
-    appendMessage(messageText, 'user-message');
-    chatInput.value = ''; // فیلد ورودی را خالی کن
-    chatWindow.scrollTop = chatWindow.scrollHeight; // اسکرول به پایین چت‌باکس
+  const messages = document.getElementById("messages");
+  messages.innerHTML += `<div class="message user">👤 شما: ${text}</div>`;
+  input.value = "";
+  input.disabled = true;
 
-    // 2. ارسال پیام به Webhook در n8n
-    try {
-        const fetchOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ message: messageText }) // پیام کاربر را در یک شیء JSON با کلید 'message' ارسال کن
-        };
+  try {
+    const response = await fetch("https://jalvanaghagent.app.n8n.cloud/webhook-test/5721d2a3-68d0-4626-9678-e50aafba3eca", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text })
+    });
 
-        // اگر Basic Auth فعال بود، هدر Authorization را اضافه کن
-        // if (USERNAME && PASSWORD) {
-        //     fetchOptions.headers['Authorization'] = 'Basic ' + btoa(USERNAME + ':' + PASSWORD);
-        // }
+    const data = await response.json();
+    const reply = data.responseText || data.text || "پاسخی دریافت نشد.";
 
-        const response = await fetch(WEBHOOK_URL, fetchOptions);
+    messages.innerHTML += `<div class="message agent">⚖️ مشاور: ${reply}</div>`;
+    messages.scrollTop = messages.scrollHeight;
 
-        // بررسی اینکه آیا پاسخ HTTP موفقیت‌آمیز بوده است (کد وضعیت 200-299)
-        if (!response.ok) {
-            // اگر خطایی در سمت سرور (n8n) رخ داده باشد
-            const errorText = await response.text(); // سعی کن متن خطا را بگیری
-            console.error('HTTP error from n8n Webhook:', response.status, errorText);
-            throw new Error(`مشکلی در ارتباط با سرور رخ داد: ${response.status}`);
-        }
+  } catch (err) {
+    messages.innerHTML += `<div class="message agent">❌ خطا در اتصال به مشاور. لطفاً دوباره تلاش کنید.</div>`;
+  }
 
-        const data = await response.json(); // پاسخ JSON از n8n را دریافت کن
-
-        // 3. نمایش پاسخ AI در چت‌باکس
-        // انتظار داریم n8n پاسخ AI را در یک کلید به نام 'response' در JSON برگرداند
-        if (data && data.response) {
-            appendMessage(data.response, 'ai-message');
-        } else {
-            // اگر پاسخ از n8n فرمت مورد انتظار را نداشت
-            appendMessage('مشاور پاسخ نامشخصی داد. لطفاً دوباره تلاش کنید.', 'ai-message');
-        }
-
-    } catch (error) {
-        console.error('خطا در ارسال پیام یا دریافت پاسخ:', error);
-        // نمایش پیام خطا به کاربر
-        appendMessage('متاسفانه در حال حاضر ارتباط برقرار نیست. لطفاً بعداً تلاش کنید یا با دفتر تماس بگیرید.', 'ai-message error');
-    } finally {
-        // اطمینان از اینکه اسکرول همیشه به پایین می‌رود
-        chatWindow.scrollTop = chatWindow.scrollHeight; 
-    }
+  input.disabled = false;
+  input.focus();
 }
-
-/**
- * این تابع یک پیام جدید را به پنجره چت اضافه می‌کند.
- * @param {string} text - متن پیام.
- * @param {string} type - نوع پیام ('user-message' برای کاربر، 'ai-message' برای ربات).
- */
-function appendMessage(text, type) {
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('message', type);
-    messageDiv.textContent = text;
-    chatWindow.appendChild(messageDiv);
-}
-
-// گوش دادن به رویداد کلیک روی دکمه ارسال
-sendButton.addEventListener('click', sendMessage);
-
-// گوش دادن به رویداد فشردن کلید (برای ارسال پیام با Enter)
-chatInput.addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-        sendMessage();
-    }
-});
