@@ -3,9 +3,10 @@ const chatInput = document.getElementById('chatInput');
 const sendButton = document.getElementById('sendButton');
 const chatWindow = document.getElementById('chatWindow');
 
-// **URL Webhook n8n شما (به‌روز شده برای تست)**
-// از این URL استفاده کنید اگر ورک‌فلوی n8n شما در حالت تست است و "Listen for test event" را فعال کرده‌اید.
-// وقتی ورک‌فلو را برای استفاده دائمی "Active" می‌کنید، باید از URL بدون "-test" استفاده کنید.
+// **URL Webhook n8n شما**
+// این آدرس برای وقتی هست که ورک‌فلوی n8n شما در حالت تست و "Listen for test event" فعال است.
+// وقتی ورک‌فلو را برای استفاده دائمی "Active" (فعال) می‌کنید، باید این URL را به نسخه بدون "-test" تغییر دهید:
+// 'https://jalvanaghagent.app.n8n.cloud/webhook/074a5928-8902-43af-9a56-4cf0d0d12876'
 const WEBHOOK_URL = 'https://jalvanaghagent.app.n8n.cloud/webhook-test/5721d2a3-68d0-4626-9678-e50aafba3eca'; 
 
 // اگر در n8n برای Webhook خود احراز هویت (Basic Auth) فعال کرده‌اید، 
