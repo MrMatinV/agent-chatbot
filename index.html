@@ -1,26 +1,20 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشاوره حقوقی هوش مصنوعی | خانم رقیه پاسبانی الوانق</title>
-    
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>چت‌بات مشاور حقوقی</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="chat-container">
-        <div class="chat-header">
-            مشاور حقوقی هوش مصنوعی خانم رقیه پاسبانی
-        </div>
-        <div class="chat-window" id="chatWindow">
-            <div class="message ai-message">سلام! من مشاور حقوقی هوش مصنوعی هستم. چطور می‌تونم به شما کمک کنم؟</div>
-        </div>
-        <div class="chat-input-area">
-            <input type="text" class="chat-input" id="chatInput" placeholder="پیام خود را اینجا بنویسید...">
-            <button class="send-button" id="sendButton">ارسال</button>
-        </div>
+  <div class="chat-box">
+    <h2>💬 مشاوره حقوقی</h2>
+    <div id="messages" class="messages">
+      <div class="message agent">⚖️ خوش آمدید! شما در حال گفتگو با <strong>سرکار خانم رقیه پاسبانی، وکیل پایه یک دادگستری</strong> هستید.</div>
     </div>
+    <input type="text" id="userInput" placeholder="سوال حقوقی خود را وارد کنید...">
+    <button onclick="sendMessage()">ارسال</button>
+  </div>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
