@@ -5,7 +5,7 @@ const chatWindow = document.getElementById('chatWindow');
 
 // **URL Webhook n8n شما (به‌روز شده)**
 // این URL برای وقتی هست که ورک‌فلوی n8n شما Active (فعال) است.
-const WEBHOOK_URL = 'https://jalvanaghagent.app.n8n.cloud/webhook/mywebhook'; 
+const WEBHOOK_URL = 'https://jalvanaghagent.app.n8n.cloud/webhook-test/mywebhook'; 
 
 // اگر در n8n برای Webhook خود احراز هویت (Basic Auth) فعال کرده‌اید، 
 // خطوط زیر را از حالت کامنت خارج کرده و نام کاربری و رمز عبور را جایگزین کنید:
