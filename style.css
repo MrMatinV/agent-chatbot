@@ -1,107 +1,58 @@
 body {
-    font-family: 'B Nazanin', Tahoma, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f4f7f6;
-    margin: 0;
-    direction: rtl; /* برای جهت راست به چپ */
+  font-family: sans-serif;
+  background: #eef1f4;
+  padding: 20px;
+  direction: rtl;
 }
 
-.chat-container {
-    width: 90%;
-    max-width: 500px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    height: 600px; /* ارتفاع ثابت برای چت‌باکس */
+.chat-box {
+  max-width: 500px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
 
-.chat-header {
-    background-color: #5a67d8; /* رنگ آبی ملایم */
-    color: white;
-    padding: 15px;
-    text-align: center;
-    font-size: 1.2em;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-.chat-window {
-    flex-grow: 1;
-    padding: 20px;
-    overflow-y: auto; /* اسکرول برای پیام‌ها */
-    background-color: #e6eaf0; /* پس‌زمینه روشن برای پنجره چت */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.messages {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: #fefefe;
+  margin-bottom: 15px;
+  border-radius: 8px;
 }
 
 .message {
-    max-width: 70%;
-    padding: 10px 15px;
-    border-radius: 15px;
-    line-height: 1.5;
-    word-wrap: break-word;
+  margin: 8px 0;
 }
 
-.user-message {
-    align-self: flex-start; /* پیام‌های کاربر در سمت راست */
-    background-color: #d1e7dd; /* سبز کم‌رنگ */
-    color: #333;
-    border-bottom-right-radius: 0;
+.user {
+  color: #0077cc;
 }
 
-.ai-message {
-    align-self: flex-end; /* پیام‌های ایجنت در سمت چپ */
-    background-color: #e0e7fa; /* آبی کم‌رنگ */
-    color: #333;
-    border-bottom-left-radius: 0;
+.agent {
+  color: #2e7d32;
 }
 
-.chat-input-area {
-    display: flex;
-    padding: 15px;
-    border-top: 1px solid #eee;
-    background-color: #f9f9f9;
+input,
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #bbb;
 }
 
-.chat-input {
-    flex-grow: 1;
-    padding: 12px 15px;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    font-size: 1em;
-    margin-left: 10px; /* فاصله از دکمه ارسال */
-    text-align: right; /* برای ورودی فارسی */
+button {
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  border: none;
 }
 
-.chat-input:focus {
-    outline: none;
-    border-color: #5a67d8;
-    box-shadow: 0 0 0 2px rgba(90, 103, 216, 0.2);
-}
-
-.send-button {
-    background-color: #5a67d8;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    padding: 12px 20px;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s ease;
-}
-
-.send-button:hover {
-    background-color: #434cbf;
-}
-
-/* برای پشتیبانی از RTL در input placeholder */
-.chat-input::placeholder {
-    text-align: right;
+button:hover {
+  background-color: #45a049;
 }
