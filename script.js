@@ -4,7 +4,7 @@ const sendButton = document.getElementById('sendButton');
 const chatWindow = document.getElementById('chatWindow');
 
 // **URL Webhook n8n شما**
-// این آدرسی است که شما ارائه دادید:
+// این آدرسی است که شما ارائه دادید: https://jalvanaghagent.app.n8n.cloud/webhook-test/a6fe9bf9-3c16-4972-a55c-9484e817ed0b
 const WEBHOOK_URL = 'https://jalvanaghagent.app.n8n.cloud/webhook-test/a6fe9bf9-3c16-4972-a55c-9484e817ed0b'; 
 
 // اگر در n8n برای Webhook خود احراز هویت (Basic Auth) فعال کرده‌اید، 
