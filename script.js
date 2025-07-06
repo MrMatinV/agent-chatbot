@@ -3,30 +3,27 @@ const chatInput = document.getElementById('chatInput');
 const sendButton = document.getElementById('sendButton');
 const chatWindow = document.getElementById('chatWindow');
 
-// **URL Webhook n8n شما (به‌روز شده)**
-// این URL برای وقتی هست که ورک‌فلوی n8n شما Active (فعال) است.
+
+
 const WEBHOOK_URL = 'https://jalvanaghagent.app.n8n.cloud/webhook/mywebhook'; 
 
-// اگر در n8n برای Webhook خود احراز هویت (Basic Auth) فعال کرده‌اید، 
+
 // خطوط زیر را از حالت کامنت خارج کرده و نام کاربری و رمز عبور را جایگزین کنید:
 // const USERNAME = 'your_username';
 // const PASSWORD = 'your_password';
 
 
-/**
- * این تابع پیام کاربر را دریافت کرده، آن را در چت‌باکس نمایش می‌دهد،
- * و سپس به Webhook در n8n ارسال می‌کند تا پاسخ AI را دریافت کند.
- */
+
 async function sendMessage() {
     const messageText = chatInput.value.trim();
     if (messageText === '') return; // اگر پیام خالی بود، کاری نکن
 
-    // 1. نمایش پیام کاربر در چت‌باکس
+   
     appendMessage(messageText, 'user-message');
     chatInput.value = ''; // فیلد ورودی را خالی کن
     chatWindow.scrollTop = chatWindow.scrollHeight; // اسکرول به پایین چت‌باکس
 
-    // 2. ارسال پیام به Webhook در n8n
+ 
     try {
         const fetchOptions = {
             method: 'POST',
@@ -36,7 +33,7 @@ async function sendMessage() {
             body: JSON.stringify({ message: messageText }) // پیام کاربر را در یک شیء JSON با کلید 'message' ارسال کن
         };
 
-        // اگر Basic Auth فعال بود، هدر Authorization را اضافه کن
+      
         // if (USERNAME && PASSWORD) {
         //     fetchOptions.headers['Authorization'] = 'Basic ' + btoa(USERNAME + ':' + PASSWORD);
         // }
@@ -54,11 +51,9 @@ async function sendMessage() {
         const data = await response.json(); // پاسخ JSON از n8n را دریافت کن
 
         // 3. نمایش پاسخ AI در چت‌باکس
-        // انتظار داریم n8n پاسخ AI را در یک کلید به نام 'response' در JSON برگرداند
         if (data && data.response) {
             appendMessage(data.response, 'ai-message');
         } else {
-            // اگر پاسخ از n8n فرمت مورد انتظار را نداشت
             appendMessage('مشاور پاسخ نامشخصی داد. لطفاً دوباره تلاش کنید.', 'ai-message');
         }
 
