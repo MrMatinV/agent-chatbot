@@ -5,7 +5,7 @@ const chatWindow = document.getElementById('chatWindow');
 
 
 
-const WEBHOOK_URL = 'https://jalvanaghagent.app.n8n.cloud/webhook/mywebhook'; 
+const WEBHOOK_URL = 'https://aiagentbotpro.app.n8n.cloud/webhook/mywebhook'; 
 
 
 // خطوط زیر را از حالت کامنت خارج کرده و نام کاربری و رمز عبور را جایگزین کنید:
